@@ -3,7 +3,7 @@ import { addPackageDependencies } from '../utils/package/addPackageDependency'
 import { addPackageMetaData } from '../utils/package/addPackageMetaData'
 import { addPackageScripts } from '../utils/package/addPackageScript'
 
-export default async function (preferences: Preferences, configs: Config[], modules: ModuleConfig[]) {
+export default async function (preferences: Preferences, configs: Config[], modules: ModuleConfig[], ui: ModuleConfig) {
   // If no configs or modules were passed, skip.
   if (configs.length === 0 && modules.length === 0) {
     return
@@ -13,10 +13,14 @@ export default async function (preferences: Preferences, configs: Config[], modu
   const scriptsToAdd: Script[] = []
 
   // 1. Collect all dependencies
+  dependenciesToAdd.push(...ui.dependencies)
+  scriptsToAdd.push(...ui.scripts)
+
   configs.forEach(({ dependencies, scripts }) => {
     dependenciesToAdd.push(...dependencies)
     scriptsToAdd.push(...scripts)
   })
+
   modules.forEach(({ dependencies, scripts }) => {
     dependenciesToAdd.push(...dependencies)
     scriptsToAdd.push(...scripts)

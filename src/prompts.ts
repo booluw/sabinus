@@ -4,12 +4,8 @@ import { say } from './messages'
 import { getUserPkgManager } from './utils/getUserPkgManager'
 import { getRandomProjectNoun } from './utils/getRandomProjectNoun'
 import type { Branches, Preferences } from './types'
-
-// function skipIf(stacksToSkip: Stack[], promptType: PromptType) {
-//   return (_: unknown, preferences: Record<string, string>) => {
-//     return stacksToSkip.includes(preferences.setStack as Stack) ? null : promptType
-//   }
-// }
+import { allUiLibraries } from './utils/allUiLibs'
+import { modules } from './configs'
 
 const PROMPT_QUESTIONS: PromptObject[] = [
   {
@@ -22,19 +18,23 @@ const PROMPT_QUESTIONS: PromptObject[] = [
     type: 'select',
     name: 'setNuxtVersion',
     message: 'What version of Nuxt do you want? More information: https://github.com/booluw/sabinus-templates/blob/main/nuxt-versions',
-    choices: [
-      { title: 'Merino', description: 'A modular stack that let\'s you choose configuration and modules, e.g.: Want Prisma ORM or not? Want Authentication or not? ... Merino is ideal if you want fine-grained control', value: 'merino' },
-      { title: 'Cheviot', description: 'A batteries-included stack where most decisions were made for you. Cheviot is ideal if you want to just get going with an opinionated stack that works', value: 'cheviot' },
-    ],
+    choices: [],
     initial: 0
   },
-  // {
-  //   type: skipIf(['cheviot'], 'multiselect'),
-  //   name: 'addModules',
-  //   message: 'Which modules would you like to use?',
-  //   choices: Object.entries(modules).map((
-  //     [key, { humanReadableName, description }]) => ({ title: humanReadableName, description, value: key }))
-  // },
+  {
+    type: 'select',
+    name: 'setUILibrary',
+    message: 'what UI Library would you want?',
+    choices: [...allUiLibraries],
+    initial: 0
+  },
+  {
+    type: prev => prev === 'nuxtui' ? false : 'multiselect',
+    name: 'addModules',
+    message: 'Which modules would you like to use?',
+    choices: Object.entries(modules).map((
+      [key, { humanReadableName, description }]) => ({ title: humanReadableName, description, value: key }))
+  },
   {
     type: 'confirm',
     name: 'runGitInit',

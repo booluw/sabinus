@@ -1,9 +1,10 @@
 import type { NuxtConfig } from '@nuxt/schema'
-import type { Modules } from './configs'
+import type { Modules, UILibs } from './configs'
 
 export interface Preferences {
   setProjectName: string
   version: string
+  ui: UILibs
   addModules?: Modules[]
   runGitInit: boolean
   addCi?: 'github' | 'drone'
@@ -53,4 +54,9 @@ export interface Branches {
     url: string
   }
   protected: boolean
+}
+
+export interface NameVal {
+  title: string
+  value: string
 }

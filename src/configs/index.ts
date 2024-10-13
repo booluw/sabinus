@@ -1,6 +1,5 @@
 import type { Config, ModuleConfig } from '../types'
 import tailwind from './tailwind'
-import naiveui from './naiveui'
 import prisma from './prisma'
 import trpc from './trpc'
 import sidebaseAuth from './sidebase-auth'
@@ -12,10 +11,13 @@ import vscode from './vscode'
 import droneCI from './droneCI'
 import i18n from './i18n'
 
-export type Modules = 'prisma' | 'sidebase-auth' | 'trpc' | 'tailwind' | 'naiveui' | 'i18n'
+import elementui from './UI/element'
+import naiveui from './UI/naiveui'
+import nuxtui from './UI/nuxtui'
+
+export type Modules = 'prisma' | 'sidebase-auth' | 'trpc' | 'tailwind' | 'i18n'
 export const modules: Record<Modules, ModuleConfig> = {
   'tailwind': tailwind,
-  'naiveui': naiveui,
   'prisma': prisma,
   'trpc': trpc,
   'sidebase-auth': sidebaseAuth,
@@ -30,4 +32,11 @@ export const configs: Record<Configs, Config> = {
   'pnpm': pnpm,
   'vscode': vscode,
   'droneCI': droneCI
+}
+
+export type UILibs = 'nuxtui' | 'naiveui' | 'element'
+export const uiLib: Record<UILibs, ModuleConfig> = {
+  'nuxtui': nuxtui,
+  'element': elementui,
+  'naiveui': naiveui,
 }

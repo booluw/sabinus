@@ -1,14 +1,9 @@
 import type { Config, Preferences } from '../types'
-import { configs, modules } from '../configs'
+import { configs, modules, uiLib } from '../configs'
 import { getUserPkgManager } from '../utils/getUserPkgManager'
 
 export default function (preferences: Preferences) {
   const setConfigs: Config[] = []
-
-  // 1. Check if stack is not cheviot
-  if (preferences.setStack === 'cheviot') {
-    return { configs: [], modules: [] }
-  }
 
   // 2. Add Prebuilt CI pipeline
   if (preferences.addCi === 'github') {
@@ -30,6 +25,7 @@ export default function (preferences: Preferences) {
 
   // 5. Get Modules
   const setModules = preferences.addModules?.map(key => modules[key]) ?? []
+  const ui = uiLib[preferences.ui]
 
-  return { configs: setConfigs, modules: setModules }
+  return { configs: setConfigs, modules: setModules, ui }
 }

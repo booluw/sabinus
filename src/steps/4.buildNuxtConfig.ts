@@ -5,7 +5,7 @@ import defu from 'defu'
 import type { Config, ModuleConfig } from '../types'
 import { getResolver } from '../getResolver'
 
-export default async function (templateDir: string, configs: Config[], modules: ModuleConfig[]) {
+export default async function (templateDir: string, configs: Config[], modules: ModuleConfig[], ui: ModuleConfig) {
   // If no configs or modules were passed, skip.
   if (configs.length === 0 && modules.length === 0) {
     return
@@ -15,6 +15,7 @@ export default async function (templateDir: string, configs: Config[], modules: 
   const nuxtConfigExtensions: NuxtConfig[] = []
 
   // 1. Collect Nuxt Config extensions
+  nuxtConfigExtensions.push(ui.nuxtConfig)
   configs.forEach(({ nuxtConfig }) => nuxtConfigExtensions.push(nuxtConfig))
   modules.forEach(({ nuxtConfig }) => nuxtConfigExtensions.push(nuxtConfig))
 
