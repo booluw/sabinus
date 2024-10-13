@@ -7,7 +7,7 @@ export { sayGoodbye } from './goodbye'
 export { wrapInSpinner } from './spinner'
 
 // Diamond config
-export const diamond = chalk.bold.gray('🐑 Diamond:').padEnd(12, ' ') // Make `diamond` fixed sized -> emojis can habe surprising lengths
+export const diamond = chalk.bold.gray('sabinus:').padEnd(12, ' ')
 export function say(message: string) {
   console.log(diamond)
   consola.info(message)

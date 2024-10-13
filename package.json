@@ -1,8 +1,8 @@
 {
-  "name": "create-sidebase",
+  "name": "create-sabinus",
   "type": "module",
-  "version": "0.7.1",
-  "description": "The productive way to build fullstack Nuxt 3 applications, like create-t3-app but for Nuxt.",
+  "version": "0.0.1",
+  "description": "The best way to create great web apps",
   "scripts": {
     "dev": "vite-node src/ -- --nocounting",
     "dev:ci": "vite-node src/ -- --ci",
@@ -18,27 +18,26 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sidebase/create-sidebase"
+    "url": "git+https://github.com/booluw/sabinus"
   },
   "bin": {
-    "create-sidebase": "./dist/index.js"
+    "create-sabinus": "./dist/index.js"
   },
   "keywords": [
-    "sidebase",
-    "create-sidebase",
+    "sabinus",
+    "create-sabinus",
     "nuxt",
     "typescript",
     "prisma",
     "fullstack",
-    "tRPC",
-    "authentication"
+    "webapps"
   ],
-  "author": "sidestream-tech <sidebase@sidestream.tech>",
+  "author": "Boluwatife Johnson <boluwatife.j.johnson@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sidebase/create-sidebase/issues/new/choose"
+    "url": "https://github.com/booluw/sabinus/issues"
   },
-  "homepage": "https://sidebase.io",
+  "homepage": "https://github.com/booluw/sabinus",
   "devDependencies": {
     "@antfu/eslint-config": "^2.11.5",
     "@types/node": "^18.11.16",

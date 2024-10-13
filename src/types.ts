@@ -1,10 +1,9 @@
 import type { NuxtConfig } from '@nuxt/schema'
 import type { Modules } from './configs'
 
-export type Stack = 'merino' | 'cheviot'
 export interface Preferences {
   setProjectName: string
-  setStack: Stack
+  version: string
   addModules?: Modules[]
   runGitInit: boolean
   addCi?: 'github' | 'drone'
@@ -45,4 +44,14 @@ export interface ModuleConfig extends Config {
     css?: string
     js?: string
   }
+}
+
+
+export interface Branches {
+  name: string,
+  commit: {
+    sha: string,
+    url: string
+  },
+  protected: boolean
 }

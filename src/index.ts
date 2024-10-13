@@ -1,43 +1,51 @@
 #!/usr/bin/env node
 import { errorMessage, sayGoodbye, sayQuickWelcome, saySetupIsRunning, sayWelcome, wrapInSpinner } from './messages'
 import type { Preferences } from './types'
-import { getUserPreferences } from './prompts'
-import { logTelemetry } from './utils/logTelemetry'
+import { addTemplateVersionsToPrompts, getUserPreferences } from './prompts'
+// import { logTelemetry } from './utils/logTelemetry'
 import { cliOptions } from './utils/parseCliOptions'
 import { addReadMe, buildNuxtConfig, buildPackage, downloadTemplate, getConfigs, initGit, install, writeFiles } from './steps'
 import { getUserPkgManager } from './utils/getUserPkgManager'
+import { getTemplateVersions } from './utils/checkTemplateVersion'
 
 async function main() {
-  const { quick, ci } = cliOptions
+  // const { quick, ci } = cliOptions
 
   // Welcome the User
-  if (quick) {
-    await sayQuickWelcome()
-  }
-  else {
-    await sayWelcome()
-  }
+  // if (quick) {
+  //   await sayQuickWelcome()
+  // }
+  // else {
+  //   await sayWelcome()
+  // }
+
+  await sayWelcome()
 
   // Collect User preferences
   let preferences: Preferences = {
-    setProjectName: 'my-sidebase-app',
-    setStack: 'merino',
+    setProjectName: 'my-sabinus-app',
+    version: 'latest',
     addModules: ['prisma', 'sidebase-auth', 'trpc', 'tailwind', 'naiveui', 'i18n'],
     runGitInit: true,
     addCi: 'github',
     runInstall: true
   }
-  if (!ci) {
-    preferences = await getUserPreferences()
-    logTelemetry(preferences)
-  }
+  // if (!ci) {
+  //   preferences = await getUserPreferences()
+  //   logTelemetry(preferences)
+  // }
 
-  if (!quick) {
-    saySetupIsRunning(preferences)
-  }
+  // if (!quick) {
+  //   saySetupIsRunning(preferences)
+  // }
+
+  // 0. Get all supported versions
+  const nuxtVersions = await wrapInSpinner('Fetching all supported versions of Nuxt', getTemplateVersions)
+  addTemplateVersionsToPrompts(nuxtVersions)
+  preferences = await getUserPreferences()
 
   // 1. Download the Nuxt 3 template
-  const template = await wrapInSpinner(`Adding Nuxt 3 ${preferences.setStack}-template`, downloadTemplate, preferences)
+  const template = await wrapInSpinner(`Adding Nuxt 3 ${preferences.version}-template`, downloadTemplate, preferences)
 
   // 2. Get Configs and modules
   const { configs, modules } = getConfigs(preferences)

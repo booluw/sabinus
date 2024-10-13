@@ -2,18 +2,13 @@ import { downloadTemplate } from 'giget'
 import { say } from '../messages'
 import type { Preferences } from '../types'
 
-const KNOWN_TEMPLATES = {
-  merino: 'github:sidebase/templates#nuxt-3.12.4',
-  cheviot: 'community/sidebase'
-}
-
 export default async (preferences: Preferences) => {
-  const templateName = KNOWN_TEMPLATES[preferences.setStack as keyof typeof KNOWN_TEMPLATES]
-
   // 1. Download template
   let template
   try {
-    template = await downloadTemplate(templateName, {
+    // [provider]:repo[/subpath][#ref]
+    // #ref: particular branch
+    template = await downloadTemplate(`github:booluw/sabinus-templates#${preferences.version}`, {
       dir: preferences.setProjectName,
       registry: 'https://raw.githubusercontent.com/nuxt/starter/templates/templates'
     })

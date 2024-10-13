@@ -9,7 +9,7 @@ export async function getVersion() {
 
   let response: { version: string }
   try {
-    response = await fetch('https://registry.npmjs.org/create-sidebase/latest').then(response => response.json() as unknown as { version: string })
+    response = await fetch('https://registry.npmjs.org/create-sabinus/latest').then(response => response.json() as unknown as { version: string })
   }
   catch (error) {
     console.error(error)
