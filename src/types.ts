@@ -46,12 +46,11 @@ export interface ModuleConfig extends Config {
   }
 }
 
-
 export interface Branches {
-  name: string,
+  name: string
   commit: {
-    sha: string,
+    sha: string
     url: string
-  },
+  }
   protected: boolean
 }

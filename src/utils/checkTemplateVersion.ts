@@ -14,7 +14,7 @@ export async function getTemplateVersions() {
   }
   catch (error) {
     // There will always be a 'latest' template in sabinus/templates
-    templateVersions = [{ name: 'latest', commit: { sha: '', url: ''}, protected: false }]
+    templateVersions = [{ name: 'latest', commit: { sha: '', url: '' }, protected: false }]
     console.log(error)
   }
 

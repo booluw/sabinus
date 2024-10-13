@@ -1,11 +1,9 @@
 import prompts from 'prompts'
-import type { PromptObject, PromptType } from 'prompts'
+import type { PromptObject } from 'prompts'
 import { say } from './messages'
 import { getUserPkgManager } from './utils/getUserPkgManager'
 import { getRandomProjectNoun } from './utils/getRandomProjectNoun'
 import type { Branches, Preferences } from './types'
-import { modules } from './configs'
-import { Branches } from './types';
 
 // function skipIf(stacksToSkip: Stack[], promptType: PromptType) {
 //   return (_: unknown, preferences: Record<string, string>) => {
@@ -71,6 +69,8 @@ function onCancel() {
 }
 
 export function addTemplateVersionsToPrompts(templateVersions: Branches[]) {
-  PROMPT_QUESTIONS[1].choices = templateVersions.map((branch: Branches) => { return { title: branch.name, value: branch.name, description: `Use version '${branch.name}' of Sabinus Nuxt template`} })
+  PROMPT_QUESTIONS[1].choices = templateVersions.map((branch: Branches) => {
+    return { title: branch.name, value: branch.name, description: `Use version '${branch.name}' of Sabinus Nuxt template` }
+  })
 }
 export const getUserPreferences = () => prompts(PROMPT_QUESTIONS, { onCancel }) as Promise<Preferences>

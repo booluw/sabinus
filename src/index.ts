@@ -1,9 +1,8 @@
 #!/usr/bin/env node
-import { errorMessage, sayGoodbye, sayQuickWelcome, saySetupIsRunning, sayWelcome, wrapInSpinner } from './messages'
+import { errorMessage, sayGoodbye, sayWelcome, wrapInSpinner } from './messages'
 import type { Preferences } from './types'
 import { addTemplateVersionsToPrompts, getUserPreferences } from './prompts'
 // import { logTelemetry } from './utils/logTelemetry'
-import { cliOptions } from './utils/parseCliOptions'
 import { addReadMe, buildNuxtConfig, buildPackage, downloadTemplate, getConfigs, initGit, install, writeFiles } from './steps'
 import { getUserPkgManager } from './utils/getUserPkgManager'
 import { getTemplateVersions } from './utils/checkTemplateVersion'
