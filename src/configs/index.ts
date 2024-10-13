@@ -1,23 +1,24 @@
 import type { Config, ModuleConfig } from '../types'
-import tailwind from './tailwind'
-import prisma from './prisma'
-import trpc from './trpc'
-import sidebaseAuth from './sidebase-auth'
-import eslint from './eslint'
-import githubActions from './github-actions'
-import typescript from './typescript'
-import pnpm from './pnpm'
-import vscode from './vscode'
-import droneCI from './droneCI'
-import i18n from './i18n'
+import prisma from './orm/prisma'
+import trpc from './modules/trpc'
+import sidebaseAuth from './modules/sidebase-auth'
+import eslint from './modules/eslint'
+import githubActions from './modules/github-actions'
+import typescript from './modules/typescript'
+import pnpm from './modules/pnpm'
+import vscode from './modules/vscode'
+import droneCI from './modules/droneCI'
+import i18n from './modules/i18n'
 
-import elementui from './UI/element'
-import naiveui from './UI/naiveui'
-import nuxtui from './UI/nuxtui'
+import elementui from './ui/element'
+import naiveui from './ui/naiveui'
+import nuxtui from './ui/nuxtui'
 
-export type Modules = 'prisma' | 'sidebase-auth' | 'trpc' | 'tailwind' | 'i18n'
+import Unocss from './css/unocss'
+import tailwind from './css/tailwind'
+
+export type Modules = 'prisma' | 'sidebase-auth' | 'trpc' | 'i18n'
 export const modules: Record<Modules, ModuleConfig> = {
-  'tailwind': tailwind,
   'prisma': prisma,
   'trpc': trpc,
   'sidebase-auth': sidebaseAuth,
@@ -40,3 +41,10 @@ export const uiLib: Record<UILibs, ModuleConfig> = {
   'element': elementui,
   'naiveui': naiveui,
 }
+
+export type css = 'tailwind' | 'unocss'
+export const cssModule: Record<css, ModuleConfig> = {
+  'unocss': Unocss,
+  'tailwind': tailwind
+}
+

@@ -1,5 +1,5 @@
-import { generateModuleHTMLComponent, generateModuleHTMLSnippet } from '../generators/generateModuleComponents'
-import type { ModuleConfig } from '../types'
+import { generateModuleHTMLComponent, generateModuleHTMLSnippet } from '../../generators/generateModuleComponents'
+import type { ModuleConfig } from '../../types'
 
 const tailwindDemoComponent = `<template>
   ${generateModuleHTMLComponent(

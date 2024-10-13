@@ -5,7 +5,7 @@ import { getUserPkgManager } from './utils/getUserPkgManager'
 import { getRandomProjectNoun } from './utils/getRandomProjectNoun'
 import type { Branches, Preferences } from './types'
 import { allUiLibraries } from './utils/allUiLibs'
-import { modules } from './configs'
+import { modules, uiLib } from './configs'
 
 const PROMPT_QUESTIONS: PromptObject[] = [
   {
@@ -32,7 +32,7 @@ const PROMPT_QUESTIONS: PromptObject[] = [
     type: prev => prev === 'nuxtui' ? false : 'multiselect',
     name: 'addModules',
     message: 'Which modules would you like to use?',
-    choices: Object.entries(modules).map((
+    choices: Object.entries(uiLib).map((
       [key, { humanReadableName, description }]) => ({ title: humanReadableName, description, value: key }))
   },
   {
