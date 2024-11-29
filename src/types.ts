@@ -1,11 +1,11 @@
 import type { NuxtConfig } from '@nuxt/schema'
-import type { Modules, css, ui } from './configs'
+import type { Modules, css, orm, ui } from './configs'
 
 export interface Preferences {
   projectName: string
   version: string
   ui: ui
-  orm: string
+  orm: orm
   addModules?: Modules[]
   runGitInit: boolean
   css: css

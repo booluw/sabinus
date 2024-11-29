@@ -11,6 +11,9 @@ function makeReadme(preferences: Preferences) {
   if (css) {
     selectedFeatures.push({ name: css, url: css === 'tailwind' ? 'https://tailwindcss.com/' : 'https://unocss.dev/' })
   }
+  if (orm) {
+    selectedFeatures.push({ name: css, url: orm === 'prisma' ? 'https://www.prisma.io/' : 'https://www.orm.drizzle.team/' })
+  }
 
   const tasksPostInstall = orm ? ormModules[orm].tasksPostInstall : []
   const packageManager = getUserPkgManager()

@@ -6,7 +6,6 @@ const prismaRootSchema = `// This is your Prisma schema file,
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["prismaSchemaFolder"]
 }
 
 datasource db {
@@ -34,7 +33,11 @@ const prismaExampleEndpoint = `/**
  * export type Context = inferAsyncReturnType<typeof createContext>
  * \`\`\`
  */
-export default defineEventHandler(event => event.context.prisma.example.findMany())
+export default defineEventHandler(event => {
+  const { prisma } = event.context
+
+  return prisma.example.findMany()
+})
 `
 
 const prismaServerMiddleware = `import { PrismaClient } from '@prisma/client'
@@ -53,6 +56,19 @@ export default eventHandler((event) => {
   }
   event.context.prisma = prisma
 })
+`
+
+const prismaHealthEndpoint = `export default eventHandler(async (event) => {
+    const { prisma } = event.context
+
+    try {
+      await prisma.$queryRaw`+'`SELECT 1;`'+`
+
+      return { date: new Date(), health: 'Server is good', nuxtAppVersion: useRuntimeConfig().version || 'unknown'}
+    } catch(err) {
+      throw createError({ statusCode: 500, statusMessage: 'db connection failed' })
+    }
+  })
 `
 
 const prismaUtils = `import { execSync } from 'node:child_process'
@@ -118,7 +134,7 @@ const prisma: ModuleConfig = {
     path: '.env',
     content: prismaEnvFile
   }, {
-    path: 'prisma/schema/schema.prisma',
+    path: 'prisma/schema.prisma',
     content: prismaRootSchema
   }, {
     path: 'server/api/examples.get.ts',
@@ -126,6 +142,9 @@ const prisma: ModuleConfig = {
   }, {
     path: 'server/middleware/0.prisma.ts',
     content: prismaServerMiddleware
+  }, {
+    path: 'server/healthz.get.ts',
+    content: prismaHealthEndpoint
   }, {
     path: 'prisma/utils.ts',
     content: prismaUtils

@@ -1,8 +1,7 @@
 import { generateModuleHTMLComponent, generateModuleHTMLSnippet } from '../../generators/generateModuleComponents'
 import type { ModuleConfig } from '../../types'
 
-const drizzleConfig = `
-  import 'dotenv/config'
+const drizzleConfig = `import 'dotenv/config'
   import { defineConfig } from 'drizzle-kit';
 
   export default defineConfig({
@@ -27,16 +26,28 @@ const drizzleEnvFile = `# Drizzle
   DB_FILE_NAME=file:./local.db
 `
 
-const drizzleExampleEndpoint = `
-  import { users } from 'drizzle/schema.ts'
+const drizzleExampleEndpoint = `import { users } from 'drizzle/schema.ts'
+
   export default defineEventHandler(async (event) => {
     const { db } = event.context
     return await db.select().from(users)
   })
 `
 
-const drizzleServerMiddleware = `
-  import { drizzle } from "drizzle-orm/connect";
+const drizzleHealthEndpoint = `import { drizzle } from "drizzle-orm/connect";
+
+  export default defineEventHandler(async (event) => {
+    try {
+      const db = await drizzle('postgres-js', { connection: process.env.DB_FILE_NAME})
+
+      return { db, date: new Date(), health: 'Server is good', nuxtAppVersion: useRuntimeConfig().version || 'unknown'}
+    } catch(err) {
+      throw createError({ statusCode: 500, statusMessage: 'db connection failed' })
+    }
+  })
+`
+
+const drizzleServerMiddleware = `import { drizzle } from "drizzle-orm/connect";
 
   let db
 
@@ -103,6 +114,9 @@ const drizzle: ModuleConfig = {
     path: 'server/api/examples.get.ts',
     content: drizzleExampleEndpoint
   }, {
+    path: 'server/healthz.get.ts',
+    content: drizzleHealthEndpoint
+  }, {
     path: 'server/middleware/0.drizzle.ts',
     content: drizzleServerMiddleware
   }, {
@@ -111,8 +125,8 @@ const drizzle: ModuleConfig = {
   }],
   tasksPostInstall: [
     // TODO: write this accordingly
-    '- [ ] Drizzle: Edit your `drizzle/schema.schema` to your liking',
-    '- [ ] Drizzle: Run `npx drizzle-kit generate` to sync the schema to your database & generate the Drizzle Client',
+    '- [ ] Drizzle: Edit your `drizzle/schema.ts` to your suite your project',
+    '- [ ] Drizzle: Run `npx drizzle-kit push` to test your schema locally, for rapid iterations',
   ],
   indexVue: generateModuleHTMLSnippet('WelcomeDrizzleDemo'),
 }
