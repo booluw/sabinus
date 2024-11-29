@@ -15,6 +15,14 @@ const UnocssDemoComponent = `<template>
 </template>
 `
 
+const UnocssConfig = `
+  import { defineConfig } from 'unocss'
+
+  export default defineConfig({
+    // ...UnoCSS options
+  })
+`
+
 const Unocss: ModuleConfig = {
   humanReadableName: 'UnoCSS',
   description: 'Instant On-demand Atomic CSS Engine. See more: https://unocss.dev/',
@@ -34,10 +42,16 @@ const Unocss: ModuleConfig = {
   nuxtConfig: {
     modules: ['@unocss/nuxt']
   },
-  files: [{
-    path: 'components/Welcome/UnocssDemo.vue',
-    content: UnocssDemoComponent,
-  }],
+  files: [
+    {
+      path: 'components/Welcome/UnocssDemo.vue',
+      content: UnocssDemoComponent,
+    },
+    {
+      path: 'uno.config.ts',
+      content: UnocssConfig
+    }
+  ],
   tasksPostInstall: [],
   indexVue: generateModuleHTMLSnippet('WelcomeUnocssDemo'),
 }

@@ -5,7 +5,7 @@ const tailwindDemoComponent = `<template>
   ${generateModuleHTMLComponent(
     'TailwindCSS',
     'Rapidly build modern websites without ever leaving your HTML.',
-    'https://sidebase.io/sidebase/components/tailwindcss',
+    'https://tailwindcss.nuxtjs.org/',
     '',
     `<WelcomeButtonLink href="/_tailwind/" :blank="true">
           Tailwind viewer

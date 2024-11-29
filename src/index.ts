@@ -50,16 +50,16 @@ async function main() {
   const template = await wrapInSpinner(`Adding Nuxt 3 ${preferences.version}-template`, downloadTemplate, preferences)
 
   // 2. Get Configs and modules
-  const { configs, modules, ui, css } = getConfigs(preferences)
+  const { configs, modules, ui, css, orm } = getConfigs(preferences)
 
   // 3. Build `package.json`
-  await wrapInSpinner('Building `package.json`', buildPackage, preferences, configs, modules, ui, css)
+  await wrapInSpinner('Building `package.json`', buildPackage, preferences, configs, modules, ui, css, orm)
 
   // 4. Build `nuxt.config.ts`
   await wrapInSpinner('Building `nuxt.config.ts`', buildNuxtConfig, template.dir, configs, modules, ui, css)
 
   // 5. Write files
-  await wrapInSpinner('Writing files', writeFiles, template.dir, configs, modules)
+  await wrapInSpinner('Writing files', writeFiles, template.dir, configs, modules, orm, css)
 
   // 6. Initialize git
   if (preferences.runGitInit) {

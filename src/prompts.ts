@@ -27,7 +27,7 @@ const PROMPT_QUESTIONS: PromptObject[] = [
     choices: [
       {
         title: 'None',
-        value: 'none'
+        value: null
       },
       ...Object.entries(uiModules).map((
       [key, { humanReadableName, description }]) => ({ title: humanReadableName, description, value: key }))
@@ -56,7 +56,7 @@ const PROMPT_QUESTIONS: PromptObject[] = [
     choices: [
       {
         title: 'None',
-        value: 'none'
+        value: null
       },
       ...Object.entries(cssModules).map((
         [key, { humanReadableName, description }]) => ({ title: humanReadableName, description, value: key }))
@@ -69,7 +69,7 @@ const PROMPT_QUESTIONS: PromptObject[] = [
     choices: [
       {
         title: 'None',
-        value: 'none'
+        value: null
       },
       ...Object.entries(ormModules).map((
         [key, { humanReadableName, description }]) => ({ title: humanReadableName, description, value: key }))

@@ -18,12 +18,6 @@ datasource db {
 }
 `
 
-const prismaExampleSchema = `model Example {
-  id          String @id @default(uuid())
-  details     String
-}
-`
-
 const prismaEnvFile = `# Prisma
 DATABASE_URL=file:./db.sqlite
 `
@@ -126,9 +120,6 @@ const prisma: ModuleConfig = {
   }, {
     path: 'prisma/schema/schema.prisma',
     content: prismaRootSchema
-  }, {
-    path: 'prisma/schema/example.prisma',
-    content: prismaExampleSchema
   }, {
     path: 'server/api/examples.get.ts',
     content: prismaExampleEndpoint

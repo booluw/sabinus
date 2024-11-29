@@ -2,15 +2,17 @@ import { writeFile } from 'node:fs/promises'
 import { getResolver } from '../getResolver'
 import type { Preferences } from '../types'
 import { getUserPkgManager } from '../utils/getUserPkgManager'
-import { modules, ormModules } from '../configs'
+import { ormModules } from '../configs'
 
 function makeReadme(preferences: Preferences) {
-  const { projectName, orm } = preferences
+  const { projectName, orm, css } = preferences
 
-  // let selectedFeatures = []
+  const selectedFeatures = []
+  if (css) {
+    selectedFeatures.push({ name: css, url: css === 'tailwind' ? 'https://tailwindcss.com/' : 'https://unocss.dev/' })
+  }
 
-  const tasksPostInstall = orm !== 'none' && ormModules[orm].tasksPostInstall
-  console.log(tasksPostInstall)
+  const tasksPostInstall = orm ? ormModules[orm].tasksPostInstall : []
   const packageManager = getUserPkgManager()
 
   return `# ${projectName}-app
@@ -19,6 +21,7 @@ This is a [sabinus](https://github.com/booluw/sabinus) app created by running \`
 
 - [TypeScript](https://www.typescriptlang.org/)
 - [Nuxt 3](https://nuxt.com)
+${selectedFeatures.map((feat) => `- [${feat.name}](${feat.url})\n`).join('\n')}
 
 ## How to get going?
 

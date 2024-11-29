@@ -3,7 +3,7 @@ import { addPackageDependencies } from '../utils/package/addPackageDependency'
 import { addPackageMetaData } from '../utils/package/addPackageMetaData'
 import { addPackageScripts } from '../utils/package/addPackageScript'
 
-export default async function (preferences: Preferences, configs: Config[], modules: ModuleConfig[], ui: ModuleConfig, css: ModuleConfig) {
+export default async function (preferences: Preferences, configs: Config[], modules: ModuleConfig[], ui: ModuleConfig, css: ModuleConfig, orm: ModuleConfig) {
   // If no configs or modules were passed, skip.
   if (configs.length === 0 && modules.length === 0) {
     return
@@ -21,6 +21,11 @@ export default async function (preferences: Preferences, configs: Config[], modu
   if (css) {
     dependenciesToAdd.push(...css.dependencies)
     scriptsToAdd.push(...css.scripts)
+  }
+
+  if (orm) {
+    dependenciesToAdd.push(...orm.dependencies)
+    scriptsToAdd.push(...orm.scripts)
   }
 
   configs.forEach(({ dependencies, scripts }) => {

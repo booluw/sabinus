@@ -5,9 +5,9 @@ import { getResolver } from '../getResolver'
 import { generateIndexVue } from '../generators/generateIndexVue'
 import { buttonLink } from '../generators/generateModuleComponents'
 
-export default async function (templateDir: string, configs: Config[], modules: ModuleConfig[]) {
+export default async function (templateDir: string, configs: Config[], modules: ModuleConfig[], orm: ModuleConfig, css: ModuleConfig) {
   // If no configs or modules were passed, skip.
-  if (configs.length === 0 && modules.length === 0) {
+  if (configs.length === 0 && orm) {
     return
   }
 
@@ -25,7 +25,9 @@ export default async function (templateDir: string, configs: Config[], modules: 
   // 1. Collect all Files
   const filesToAdd: File[] = []
   configs.forEach(({ files }) => filesToAdd.push(...files))
-  modules.forEach(({ files }) => filesToAdd.push(...files))
+  if (orm) { filesToAdd.push(...orm.files) }
+  if (css) { filesToAdd.push(...css.files) }
+  // modules.forEach(({ files }) => filesToAdd.push(...files))
 
   // 2. Write files
   await Promise.all(filesToAdd.map(async (file) => {

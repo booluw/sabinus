@@ -1,5 +1,5 @@
 import type { Config, Preferences } from '../types'
-import { configs, cssModules, modules, uiModules } from '../configs'
+import { configs, cssModules, modules, ormModules, uiModules } from '../configs'
 import { getUserPkgManager } from '../utils/getUserPkgManager'
 
 export default function (preferences: Preferences) {
@@ -27,7 +27,8 @@ export default function (preferences: Preferences) {
   const setModules = preferences.addModules?.map(key => modules[key]) ?? []
   const ui = uiModules[preferences.ui]
   const css = cssModules[preferences.css]
+  const orm = ormModules[preferences.orm]
   // const orm =
 
-  return { configs: setConfigs, modules: setModules, ui, css }
+  return { configs: setConfigs, modules: setModules, ui, css, orm }
 }
