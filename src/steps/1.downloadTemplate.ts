@@ -9,7 +9,7 @@ export default async (preferences: Preferences) => {
     // [provider]:repo[/subpath][#ref]
     // #ref: particular branch
     template = await downloadTemplate(`github:booluw/sabinus-templates#${preferences.version}`, {
-      dir: preferences.setProjectName,
+      dir: preferences.projectName,
       registry: 'https://raw.githubusercontent.com/nuxt/starter/templates/templates'
     })
   }

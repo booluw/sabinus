@@ -22,10 +22,12 @@ async function main() {
 
   // Collect User preferences
   let preferences: Preferences = {
-    setProjectName: 'my-sabinus-app',
+    projectName: 'my-sabinus-app',
     version: 'latest',
     ui: 'element',
-    addModules: ['prisma', 'sidebase-auth', 'trpc', 'tailwind', 'i18n'],
+    orm: 'prisma',
+    css: 'tailwind',
+    addModules: ['sidebase-auth', 'trpc', 'i18n'],
     runGitInit: true,
     addCi: 'github',
     runInstall: true
@@ -48,13 +50,13 @@ async function main() {
   const template = await wrapInSpinner(`Adding Nuxt 3 ${preferences.version}-template`, downloadTemplate, preferences)
 
   // 2. Get Configs and modules
-  const { configs, modules, ui } = getConfigs(preferences)
+  const { configs, modules, ui, css } = getConfigs(preferences)
 
   // 3. Build `package.json`
-  await wrapInSpinner('Building `package.json`', buildPackage, preferences, configs, modules, ui)
+  await wrapInSpinner('Building `package.json`', buildPackage, preferences, configs, modules, ui, css)
 
   // 4. Build `nuxt.config.ts`
-  await wrapInSpinner('Building `nuxt.config.ts`', buildNuxtConfig, template.dir, configs, modules, ui)
+  await wrapInSpinner('Building `nuxt.config.ts`', buildNuxtConfig, template.dir, configs, modules, ui, css)
 
   // 5. Write files
   await wrapInSpinner('Writing files', writeFiles, template.dir, configs, modules)

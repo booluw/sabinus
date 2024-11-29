@@ -22,19 +22,15 @@ export function sayGoodbye(preferences: Preferences) {
   console.log(diamond)
   console.log('✨ Project setup finished. Next steps are:')
 
-  sayCommand(`cd ${preferences.setProjectName}`, 'Enter your project directory')
+  sayCommand(`cd ${preferences.projectName}`, 'Enter your project directory')
 
   const packageManager = getUserPkgManager()
   if (!preferences.runInstall) {
     sayCommand(`${packageManager} install`, 'Install project dependencies')
   }
 
-  if (preferences.addModules?.includes('prisma') || preferences.setStack === 'cheviot') {
-    sayCommand('npx prisma db push', 'Initialize the database & Prisma client')
-  }
-
   sayCommand(`${packageManager} run dev`, 'Start the development server, use CTRL+C to stop')
 
-  console.log(`\nStuck? Join us at ${chalk.blue('https://discord.gg/auc8eCeGzx')}\n`)
-  console.log(`🐑 So Long, and Thanks for ... using ${chalk.green('sidebase')} to setup your application`)
+  // console.log(`\nStuck? Join us at ${chalk.blue('https://discord.gg/auc8eCeGzx')}\n`)
+  console.log(`Until next time, thanks for ... using ${chalk.blue('sabinus')} to setup your application`)
 }

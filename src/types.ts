@@ -1,12 +1,14 @@
 import type { NuxtConfig } from '@nuxt/schema'
-import type { Modules, UILibs } from './configs'
+import type { Modules, css, ui } from './configs'
 
 export interface Preferences {
-  setProjectName: string
+  projectName: string
   version: string
-  ui: UILibs
+  ui: ui
+  orm: string
   addModules?: Modules[]
   runGitInit: boolean
+  css: css
   addCi?: 'github' | 'drone'
   runInstall: boolean
 }

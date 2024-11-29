@@ -15,7 +15,7 @@ export function say(message: string) {
 
 export function saySetupIsRunning(preferences: Preferences) {
   console.log()
-  say(`Now setting up ${chalk.green(preferences.setProjectName)}:`)
+  say(`Now setting up ${chalk.green(preferences.projectName)}:`)
 }
 
 export function errorMessage(error: any, message?: string) {

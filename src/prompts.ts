@@ -4,36 +4,76 @@ import { say } from './messages'
 import { getUserPkgManager } from './utils/getUserPkgManager'
 import { getRandomProjectNoun } from './utils/getRandomProjectNoun'
 import type { Branches, Preferences } from './types'
-import { allUiLibraries } from './utils/allUiLibs'
-import { modules, uiLib } from './configs'
+import { cssModules, /* modules, */ ormModules, uiModules } from './configs'
 
 const PROMPT_QUESTIONS: PromptObject[] = [
   {
     type: 'text',
-    name: 'setProjectName',
+    name: 'projectName',
     message: 'What will your project be called?',
     initial: `sabinus-${getRandomProjectNoun()}`
   },
   {
     type: 'select',
-    name: 'setNuxtVersion',
+    name: 'version',
     message: 'What version of Nuxt do you want? More information: https://github.com/booluw/sabinus-templates/blob/main/nuxt-versions',
     choices: [],
     initial: 0
   },
   {
     type: 'select',
-    name: 'setUILibrary',
+    name: 'ui',
     message: 'what UI Library would you want?',
-    choices: [...allUiLibraries],
+    choices: [
+      {
+        title: 'None',
+        value: 'none'
+      },
+      ...Object.entries(uiModules).map((
+      [key, { humanReadableName, description }]) => ({ title: humanReadableName, description, value: key }))
+      // {
+      //   title: 'NuxtUI',
+      //   description: 'A UI Library for modern web apps. See more: https://ui.nuxt.com/',
+      //   value: 'nuxtui'
+      // },
+      // {
+      //   title: 'NaiveUI',
+      //   description: 'A Vue 3 Component library fairly Complete, theme customizable, uses typeScript, fast kinda interesting. See more: https://www.naiveui.com',
+      //   value: 'naiveui'
+      // },
+      // {
+      //   title: 'ElementPlus',
+      //   description: 'A Vue 3 based component library for designers and developers. See more: https://element-plus.org',
+      //   value: 'element'
+      // }
+    ],
     initial: 0
   },
   {
-    type: prev => prev === 'nuxtui' ? false : 'multiselect',
-    name: 'addModules',
-    message: 'Which modules would you like to use?',
-    choices: Object.entries(uiLib).map((
-      [key, { humanReadableName, description }]) => ({ title: humanReadableName, description, value: key }))
+    type: prev => prev === 'nuxtui' ? false : 'select',
+    name: 'css',
+    message: 'Which css library would you like to use?',
+    choices: [
+      {
+        title: 'None',
+        value: 'none'
+      },
+      ...Object.entries(cssModules).map((
+        [key, { humanReadableName, description }]) => ({ title: humanReadableName, description, value: key }))
+    ]
+  },
+  {
+    type: 'select',
+    name: 'orm',
+    message: 'Which orm would you like to use?',
+    choices: [
+      {
+        title: 'None',
+        value: 'none'
+      },
+      ...Object.entries(ormModules).map((
+        [key, { humanReadableName, description }]) => ({ title: humanReadableName, description, value: key }))
+      ]
   },
   {
     type: 'confirm',
@@ -41,17 +81,17 @@ const PROMPT_QUESTIONS: PromptObject[] = [
     message: 'Initialize a new git repository?',
     initial: true,
   },
-  // {
-  //   type: skipIf(['cheviot'], 'select'),
-  //   name: 'addCi',
-  //   message: 'Initialize a default CI pipeline?',
-  //   choices: [
-  //     { title: 'No CI', description: 'Scaffold a project without any CI pipeline', value: 'none' },
-  //     { title: 'GitHub Actions', description: 'Run your CI with GitHub actions', value: 'github' },
-  //     { title: 'DroneCI', description: 'Run your CI with Drone', value: 'drone' },
-  //   ],
-  //   initial: 0,
-  // },
+  {
+    type: 'select',
+    name: 'addCi',
+    message: 'Initialize a default CI pipeline?',
+    choices: [
+      { title: 'No CI', description: 'Scaffold a project without any CI pipeline', value: 'none' },
+      { title: 'GitHub Actions', description: 'Run your CI with GitHub actions', value: 'github' },
+      { title: 'DroneCI', description: 'Run your CI with Drone', value: 'drone' },
+    ],
+    initial: 0,
+  },
   {
     type: 'confirm',
     name: 'runInstall',

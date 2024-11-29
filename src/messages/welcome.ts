@@ -40,7 +40,7 @@ export async function sayWelcome() {
 
   console.log(banner)
 
-  say(`sabinus helps you to create fully typesafe webapps in seconds: ${chalk.blueBright('https://github.com/booluw/sabinus')} \n`)
+  say(`Sabinus helps you bootstrap fullstack Nuxt apps: ${chalk.blueBright('https://github.com/booluw/sabinus')} \n`)
 
   say('Let\'s get started:')
 }

@@ -2,54 +2,31 @@ import { writeFile } from 'node:fs/promises'
 import { getResolver } from '../getResolver'
 import type { Preferences } from '../types'
 import { getUserPkgManager } from '../utils/getUserPkgManager'
-import { modules } from '../configs'
+import { modules, ormModules } from '../configs'
 
 function makeReadme(preferences: Preferences) {
-  const { setProjectName = 'sidebase', setStack = undefined, addModules = [], addCi = 'none' } = preferences
+  const { projectName, orm } = preferences
 
-  let selectedFeatures = []
-  if (setStack === 'merino') {
-    selectedFeatures = addModules.map((module: keyof typeof modules) => `- ${modules[module].humanReadableName}`)
-    if (addCi === 'github') {
-      selectedFeatures.push('- GitHub Actions based CI')
-    }
-    selectedFeatures.push('- Linting via ESLint and @antfu/eslint-config')
-  }
-  else {
-    selectedFeatures = [
-      '- Database models, migrations, queries and easy DB-switching via Prisma',
-      '- Deep Prisma integration: Use the client in your endpoints via nuxt-prisma, Prisma client is auto-generated for npm run dev and other commands and more',
-      '- Frontend- and Backend data-transformation via nuxt-parse and zod',
-      '- In-memory development SQL-database via sqlite3',
-      '- Linting via eslint',
-      '- Test management, Test UI, component snapshotting via vitest',
-      '- Component tests via test-library/vue',
-      '- Nuxt 3 native API testing via @nuxt/test-utils',
-      '- Code coverage via c8',
-      '- CSS utilities via TailwindCSS',
-      '- CSS components via Naive UI',
-      '- Type checking in script and template via Volar / vue-tsc',
-      '- Code editor configuration via .editorconfig files and a portable .settings/ folder whith best-practice VS Code settings and extensions for Vue 3 / Nuxt 3 development',
-    ]
-  }
+  // let selectedFeatures = []
 
-  const tasksPostInstall = addModules.map(module => modules[module].tasksPostInstall).flat()
+  const tasksPostInstall = orm !== 'none' && ormModules[orm].tasksPostInstall
+  console.log(tasksPostInstall)
   const packageManager = getUserPkgManager()
 
-  return `# ${setProjectName}-app
+  return `# ${projectName}-app
 
-This is a [sidebase ${setStack}](https://sidebase.io/) app created by running \`${packageManager} create sidebase@latest\`. This project uses the following technologies for a great developer- and user-experience:
+This is a [sabinus](https://github.com/booluw/sabinus) app created by running \`${packageManager} create sabinus\`. This project uses the following technologies for a great developer- and user-experience:
+
 - [TypeScript](https://www.typescriptlang.org/)
 - [Nuxt 3](https://nuxt.com)
-${selectedFeatures.join('\n')}
 
 ## How to get going?
 
-This is a straight-forward setup with minimal templating and scaffolding. The options you selected during the sidebase CLI setup are all here though. Good places to continue reading are:
-- [the First Steps documentation](https://sidebase.io/sidebase/usage)
-- [our discord](https://discord.gg/auc8eCeGzx)
+This is created as a boilerplate to build your incredible fullstack NuxtJS app on. You can contribute to this by visiting [the repo](https://github.com/booluw/sabinus) or create an [issue](https://github.com/booluw/sabinus/issues).
+Also, you can find all versions of the template [here](https://github.com/booluw/sabinus).
 
 Some tasks you should probably do in the beginning are:
+
 - [ ] replace this generic README with a more specific one
 - [ ] install the Vue Volar extension
 - [ ] enable [Volar takeover mode](https://nuxt.com/docs/getting-started/installation#prerequisites) to ensure a smooth editor setup

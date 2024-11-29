@@ -1,4 +1,4 @@
-import type { Config } from '../types'
+import type { Config } from '../../types'
 
 const eslintConfig = `import antfu from '@antfu/eslint-config'
 

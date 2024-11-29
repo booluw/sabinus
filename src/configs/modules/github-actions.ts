@@ -1,4 +1,4 @@
-import type { Config } from '../types'
+import type { Config } from '../../types'
 
 const GITHUB_ACTIONS_TEMPLATE = `
 name: CI

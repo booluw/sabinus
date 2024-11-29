@@ -1,4 +1,4 @@
-import type { Config } from '../types'
+import type { Config } from '../../types'
 
 const VSCODE_SETTINGS = `{
   // Enable the ESlint flat config support

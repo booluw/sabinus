@@ -15,7 +15,7 @@ export default async function (templateDir: string, configs: Config[], modules: 
   const nuxtConfigExtensions: NuxtConfig[] = []
 
   // 1. Collect Nuxt Config extensions
-  nuxtConfigExtensions.push(ui.nuxtConfig)
+  if (ui) { nuxtConfigExtensions.push(ui.nuxtConfig) }
   configs.forEach(({ nuxtConfig }) => nuxtConfigExtensions.push(nuxtConfig))
   modules.forEach(({ nuxtConfig }) => nuxtConfigExtensions.push(nuxtConfig))
 
